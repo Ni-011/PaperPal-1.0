@@ -10,7 +10,6 @@ export default function Home() {
     // if the user is signed in (can check that by getting {userId} from auth() in clerk) display the upload button to upload pdf files
     <div>
       <p>Hello</p>
-      <FileUpload />
     </div>
   );
 }
