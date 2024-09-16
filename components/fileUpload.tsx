@@ -1,9 +1,9 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { Inbox } from "lucide-react";
-import { upload } from "@/app/api/upload";
 import { v2 as cloudinary } from "cloudinary";
+import { fileURLToPath } from "url";
 
 const FileUpload = () => {
   // handling file config and upload
@@ -12,22 +12,22 @@ const FileUpload = () => {
     maxFiles: 1,
     // upload the file
     onDrop: async (acceptedFiles) => {
-      const uploadURL = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
-      const formData = new FormData();
-      formData.append("file", acceptedFiles[0]); // adding the file to the form data
-      formData.append("upload_preset", "myPreset");
-      formData.append(
-        "cloud_name",
-        `${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}`
-      );
-      // uplaoding
-      const response = await fetch(uploadURL, {
-        method: "POST",
-        body: formData,
-      });
-      const data = await response.json();
-      console.log("upload succesful", data);
-      console.log(process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
+      try {
+        const formData = new FormData();
+        formData.append("file", acceptedFiles[0]);
+        const response = await fetch("http://localhost:3000/api/uploadFile", {
+          method: "POST",
+          body: formData,
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Success message from backend:", data.message);
+      } catch (error) {
+        console.log("Error while sending the upload request to backend", error);
+      }
     },
   });
 
