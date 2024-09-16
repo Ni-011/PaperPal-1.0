@@ -10,22 +10,15 @@ const FileUpload = () => {
     maxFiles: 1,
     // upload the file
     onDrop: async (acceptedFiles) => {
-      try {
-        const formData = new FormData();
-        formData.append("file", acceptedFiles[0]);
-        const response = await fetch("http://localhost:3000/api/uploadFile", {
+      const response = await fetch(
+        `/api/uploadFile?filename=${acceptedFiles[0].name}`,
+        {
           method: "POST",
-          body: formData,
-        });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          body: acceptedFiles[0],
         }
-
-        const data = await response.json();
-        console.log("Success message from backend:", data.message);
-      } catch (error) {
-        console.log("Error while sending the upload request to backend", error);
-      }
+      );
+      const data = await response.json();
+      console.log(data);
     },
   });
 
