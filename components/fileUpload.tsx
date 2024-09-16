@@ -1,9 +1,7 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDropzone } from "react-dropzone";
 import { Inbox } from "lucide-react";
-import { v2 as cloudinary } from "cloudinary";
-import { fileURLToPath } from "url";
 
 const FileUpload = () => {
   // handling file config and upload

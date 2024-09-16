@@ -2,7 +2,6 @@ import {
   integer,
   pgEnum,
   pgTable,
-  PgTimestamp,
   serial,
   text,
   timestamp,
